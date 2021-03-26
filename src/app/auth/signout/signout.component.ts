@@ -12,10 +12,8 @@ export class SignoutComponent implements OnInit {
 
   ngOnInit(): void {
     // tslint:disable-next-line: deprecation
-    this.authService.signOut().subscribe();
-
-    setTimeout(() => {
-      this.router.navigateByUrl('');
-    }, 500);
+    this.authService.signOut().subscribe({
+      next: () => this.router.navigateByUrl(''),
+    });
   }
 }
