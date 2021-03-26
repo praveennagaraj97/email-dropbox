@@ -5,6 +5,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -30,7 +31,7 @@ export class SigninComponent implements OnInit {
   username = this.authForm.controls.username as FormControl;
   password = this.authForm.controls.password as FormControl;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -48,7 +49,9 @@ export class SigninComponent implements OnInit {
 
     // tslint:disable-next-line: deprecation
     this.authService.signIn({ password, username }).subscribe({
-      next: () => {},
+      next: () => {
+        this.router.navigateByUrl('inbox');
+      },
       error: (err) => {
         this.authForm.setErrors({ invalid: true });
       },

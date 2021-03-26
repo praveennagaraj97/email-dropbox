@@ -5,6 +5,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueAsyncValidator } from '../validators/unique-async-validator';
@@ -49,7 +50,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private matchPassword: MatchPassword,
     private uniqueUserNameValidator: UniqueAsyncValidator,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -70,7 +72,9 @@ export class SignupComponent implements OnInit {
       .userSignUp({ password, passwordConfirmation, username })
       // tslint:disable-next-line: deprecation
       .subscribe({
-        next: (value) => {},
+        next: () => {
+          this.router.navigateByUrl('inbox');
+        },
         error: () => {
           this.authForm.setErrors({ failed: true });
         },
