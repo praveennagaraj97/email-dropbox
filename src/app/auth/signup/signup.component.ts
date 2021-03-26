@@ -5,6 +5,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueAsyncValidator } from '../validators/unique-async-validator';
 
@@ -47,7 +48,8 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private matchPassword: MatchPassword,
-    private uniqueUserNameValidator: UniqueAsyncValidator
+    private uniqueUserNameValidator: UniqueAsyncValidator,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -55,5 +57,25 @@ export class SignupComponent implements OnInit {
     const { dirty, touched, errors } = this.authForm;
 
     return dirty && touched && errors;
+  }
+
+  onSubmit(): void {
+    if (this.authForm.invalid) {
+      return;
+    }
+
+    const { password, passwordConfirmation, username } = this.authForm.value;
+
+    this.authService
+      .userSignUp({ password, passwordConfirmation, username })
+      // tslint:disable-next-line: deprecation
+      .subscribe({
+        next: (value) => {
+          console.log(value);
+        },
+        error: () => {
+          this.authForm.setErrors({ failed: true });
+        },
+      });
   }
 }

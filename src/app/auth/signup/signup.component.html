@@ -1,5 +1,5 @@
 <h3>Create an Account</h3>
-<form [formGroup]="authForm" class="ui form">
+<form (ngSubmit)="onSubmit()" [formGroup]="authForm" class="ui form">
   <app-input inputType="text" label="Username" [control]="username"></app-input>
   <app-input
     inputType="password"
@@ -14,6 +14,7 @@
 
   <div *ngIf="showError()" class="ui red basic label">
     <p *ngIf="authForm.errors?.passwordDontMatch">Password Don't match</p>
+    <p *ngIf="authForm.errors?.failed">SignUp failed, something went wrong</p>
   </div>
 
   <div>
