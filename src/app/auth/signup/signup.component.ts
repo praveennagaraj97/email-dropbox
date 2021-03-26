@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueAsyncValidator } from '../validators/unique-async-validator';
 
@@ -46,4 +51,9 @@ export class SignupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+  showError(): false | ValidationErrors | null {
+    const { dirty, touched, errors } = this.authForm;
+
+    return dirty && touched && errors;
+  }
 }
