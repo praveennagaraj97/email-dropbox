@@ -1,1 +1,17 @@
-<p>signin works!</p>
+<form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="ui form">
+  <app-input inputType="text" label="Username" [control]="username"></app-input>
+  <app-input
+    inputType="password"
+    label="Password"
+    [control]="password"
+  ></app-input>
+
+  <div *ngIf="showError()" class="ui red basic label">
+    <p *ngIf="authForm.errors?.invalid">InValid Credentials provided</p>
+    <p *ngIf="authForm.errors?.failed">SignIn failed, something went wrong</p>
+  </div>
+
+  <div>
+    <button class="ui submit button primary">Submit</button>
+  </div>
+</form>

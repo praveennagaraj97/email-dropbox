@@ -7,10 +7,13 @@ interface UsernameAvailableResponse {
   available: boolean;
 }
 
-interface FormValuesInputPayload {
-  password: string;
-  passwordConfirmation: string;
+interface SignInPayload {
   username: string;
+  password: string;
+}
+
+interface FormValuesInputPayload extends SignInPayload {
+  passwordConfirmation: string;
 }
 
 interface SignUpRespose {
@@ -59,5 +62,11 @@ export class AuthService {
     return this.http
       .post<any>(this.baseUrl + `/auth/signout`, {})
       .pipe(tap(() => this.signedIn$.next(false)));
+  }
+
+  signIn(formValues: SignInPayload): Observable<any> {
+    return this.http
+      .post<SignInPayload>(this.baseUrl + `/auth/signin`, formValues)
+      .pipe(tap(() => this.signedIn$.next(true)));
   }
 }

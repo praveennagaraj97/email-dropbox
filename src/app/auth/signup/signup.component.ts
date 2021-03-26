@@ -70,9 +70,7 @@ export class SignupComponent implements OnInit {
       .userSignUp({ password, passwordConfirmation, username })
       // tslint:disable-next-line: deprecation
       .subscribe({
-        next: (value) => {
-          console.log(value);
-        },
+        next: (value) => {},
         error: () => {
           this.authForm.setErrors({ failed: true });
         },
