@@ -1,1 +1,13 @@
-<p>email-show works!</p>
+<div class="ui active centered inline loader" *ngIf="loading$ | async"></div>
+
+<div class="header" *ngIf="!(loading$ | async)">
+  <div>
+    <h1>{{ emailBody?.subject }}</h1>
+    <div>
+      From : <i>{{ emailBody?.from }}</i>
+    </div>
+    <div>
+      TO : <i>{{ emailBody?.to }}</i>
+    </div>
+  </div>
+</div>

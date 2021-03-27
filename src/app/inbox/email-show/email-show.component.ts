@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { EmailService, EmailBodyResponse } from '../email.service';
 
 @Component({
@@ -9,6 +11,7 @@ import { EmailService, EmailBodyResponse } from '../email.service';
 })
 export class EmailShowComponent implements OnInit {
   emailBody!: EmailBodyResponse;
+  loading$ = new BehaviorSubject<boolean>(true);
 
   constructor(
     private route: ActivatedRoute,
@@ -16,14 +19,18 @@ export class EmailShowComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // tslint:disable-next-line: deprecation
-    this.route.params.subscribe(({ id }) => {
-      // tslint:disable-next-line: deprecation
-      this.emailService.getEmail(id).subscribe({
+    this.route.params
+      .pipe(
+        tap(() => this.loading$.next(true)),
+        switchMap(({ id }) => {
+          return this.emailService.getEmail(id);
+        })
+      )
+      .subscribe({
         next: (email) => {
-          console.log(email);
+          this.loading$.next(false);
+          this.emailBody = email;
         },
       });
-    });
   }
 }
