@@ -7,9 +7,16 @@ import { EmailService } from '../email.service';
   styleUrls: ['./email-index.component.css'],
 })
 export class EmailIndexComponent implements OnInit {
+  emailsList!: { id: string; subject: string; from: string }[];
+
   constructor(private emailService: EmailService) {}
 
   ngOnInit(): void {
-    this.emailService.getEmails().subscribe();
+    // tslint:disable-next-line: deprecation
+    this.emailService.getEmails().subscribe({
+      next: (emails) => {
+        this.emailsList = emails;
+      },
+    });
   }
 }

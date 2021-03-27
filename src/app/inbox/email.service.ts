@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 interface EmailResponse {
   id: string;
@@ -18,8 +17,6 @@ export class EmailService {
   constructor(private http: HttpClient) {}
 
   getEmails(): Observable<EmailResponse[]> {
-    return this.http
-      .get<EmailResponse[]>(`${this.baseUrl}/emails`)
-      .pipe(tap((x) => console.log(x)));
+    return this.http.get<EmailResponse[]>(`${this.baseUrl}/emails`);
   }
 }
