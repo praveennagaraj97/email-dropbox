@@ -9,9 +9,11 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   signedIn$!: BehaviorSubject<boolean>;
+  isLoading$!: BehaviorSubject<boolean>;
 
   constructor(private authService: AuthService) {
     this.signedIn$ = this.authService.signedIn$;
+    this.isLoading$ = this.authService.isWaiting$;
   }
 
   ngOnInit(): void {

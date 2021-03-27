@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailService } from '../email.service';
+import { EmailService, EmailResponse } from '../email.service';
 
 @Component({
   selector: 'app-email-index',
@@ -7,7 +7,7 @@ import { EmailService } from '../email.service';
   styleUrls: ['./email-index.component.css'],
 })
 export class EmailIndexComponent implements OnInit {
-  emailsList!: { id: string; subject: string; from: string }[];
+  emailsList!: EmailResponse[];
 
   constructor(private emailService: EmailService) {}
 

@@ -1,4 +1,6 @@
-<div class="ui container">
+<div class="ui active centered inline loader" *ngIf="isLoading$ | async"></div>
+
+<div *ngIf="!(isLoading$ | async)" class="ui container">
   <div class="ui secondary pointing menu">
     <a routerLink="/" class="ui item">Angular Email</a>
     <div class="right menu">

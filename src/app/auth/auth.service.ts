@@ -28,6 +28,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   signedIn$ = new BehaviorSubject<boolean>(false);
+  isWaiting$ = new BehaviorSubject<boolean>(true);
 
   usernameAvailable(username: string): Observable<UsernameAvailableResponse> {
     return this.http.post<UsernameAvailableResponse>(
@@ -51,6 +52,7 @@ export class AuthService {
       .get<{ authenticated: boolean }>(this.baseUrl + `/auth/signedin`)
       .pipe(
         tap(({ authenticated }) => {
+          this.isWaiting$.next(false);
           if (authenticated) {
             this.signedIn$.next(true);
           }
