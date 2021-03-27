@@ -33,6 +33,8 @@ export class SigninComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  isSignedRef$ = this.authService.signedIn$;
+
   ngOnInit(): void {}
 
   showError(): boolean | ValidationErrors | null {

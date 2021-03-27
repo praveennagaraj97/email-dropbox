@@ -1,4 +1,9 @@
-<form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="ui form">
+<form
+  *ngIf="!(isSignedRef$ | async)"
+  [formGroup]="authForm"
+  (ngSubmit)="onSubmit()"
+  class="ui form"
+>
   <app-input inputType="text" label="Username" [control]="username"></app-input>
   <app-input
     inputType="password"
@@ -15,3 +20,5 @@
     <button class="ui submit button primary">Submit</button>
   </div>
 </form>
+
+<a routerLink="inbox" *ngIf="isSignedRef$ | async">Navigate to Inbox</a>
